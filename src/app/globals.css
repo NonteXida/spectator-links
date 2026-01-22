@@ -1,26 +1,181 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
+  --neon-green: #03fd1c;
+  --dark-green: #02a812;
+  --dark-grey: #1a1a1a;
+  --mid-grey: #2a2a2a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-neon: var(--neon-green);
+  --color-neon-dark: var(--dark-green);
+  --color-grey-dark: var(--dark-grey);
+  --color-grey-mid: var(--mid-grey);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neon-green);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-green);
+}
+
+/* Neon glow utilities */
+.neon-glow {
+  box-shadow: 0 0 10px var(--neon-green),
+              0 0 20px var(--neon-green),
+              0 0 40px rgba(3, 253, 28, 0.3);
+}
+
+.neon-glow-text {
+  text-shadow: 0 0 10px var(--neon-green),
+               0 0 20px var(--neon-green),
+               0 0 40px rgba(3, 253, 28, 0.5);
+}
+
+.neon-glow-subtle {
+  box-shadow: 0 0 5px var(--neon-green),
+              0 0 10px rgba(3, 253, 28, 0.3);
+}
+
+/* Gradient backgrounds */
+.gradient-radial {
+  background: radial-gradient(ellipse at center, var(--dark-grey) 0%, var(--background) 70%);
+}
+
+.gradient-dark {
+  background: linear-gradient(180deg, #0a0a0a 0%, #000000 50%, #050505 100%);
+}
+
+/* Card styles */
+.card-neon {
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
+  border: 1px solid rgba(3, 253, 28, 0.2);
+  transition: all 0.3s ease;
+}
+
+.card-neon:hover {
+  border-color: rgba(3, 253, 28, 0.6);
+  box-shadow: 0 0 20px rgba(3, 253, 28, 0.2),
+              inset 0 0 20px rgba(3, 253, 28, 0.05);
+}
+
+/* Particle container */
+#tsparticles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Form styles */
+.form-input {
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid rgba(3, 253, 28, 0.3);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--neon-green);
+  box-shadow: 0 0 10px rgba(3, 253, 28, 0.3);
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Button styles */
+.btn-neon {
+  background: linear-gradient(135deg, var(--neon-green) 0%, var(--dark-green) 100%);
+  color: black;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.btn-neon:hover {
+  box-shadow: 0 0 20px var(--neon-green),
+              0 0 40px rgba(3, 253, 28, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Animation keyframes */
+@keyframes pulse-neon {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 10px var(--neon-green),
+                0 0 20px var(--neon-green);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px var(--neon-green),
+                0 0 40px var(--neon-green),
+                0 0 60px rgba(3, 253, 28, 0.3);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-pulse-neon {
+  animation: pulse-neon 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Slider styles */
+.slider-container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.slider-container::-webkit-scrollbar {
+  display: none;
 }
