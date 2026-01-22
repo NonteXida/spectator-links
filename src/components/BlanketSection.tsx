@@ -2,7 +2,8 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { Gift, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 export default function BlanketSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -40,13 +41,19 @@ export default function BlanketSection() {
           <div className="absolute inset-0 bg-gradient-to-br from-[#03fd1c]/5 via-transparent to-[#03fd1c]/10 pointer-events-none" />
 
           <div className="relative flex flex-col md:flex-row items-center gap-6">
-            {/* Icon */}
+            {/* Product Image */}
             <motion.div
-              whileHover={{ rotate: [0, -10, 10, 0] }}
-              transition={{ duration: 0.5 }}
-              className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#03fd1c] to-emerald-600 flex items-center justify-center flex-shrink-0"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+              className="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 relative"
             >
-              <Gift className="w-10 h-10 text-black" />
+              <Image
+                src="https://static.wixstatic.com/media/d97dfe_a682d3fd7c5c48809f40f4cf9d5f2c33~mv2.jpg"
+                alt="High School Blankets"
+                fill
+                className="object-cover"
+                unoptimized
+              />
             </motion.div>
 
             {/* Content */}

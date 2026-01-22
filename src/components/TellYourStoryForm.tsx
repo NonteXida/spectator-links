@@ -1,8 +1,10 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, User, Mail, Phone, Trophy, MessageSquare } from "lucide-react";
+import { X, Send, User, Mail, Phone, Trophy, MessageSquare, AlertCircle } from "lucide-react";
 import { useState } from "react";
+
+const N8N_STORY_WEBHOOK = "https://n8n.srv1269070.hstgr.cloud/webhook/1a2e5d59-58af-4b9a-93a0-a1bf15183a57";
 
 interface FormData {
   name: string;
@@ -27,6 +29,7 @@ export default function TellYourStoryForm({ isOpen, onClose }: TellYourStoryForm
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData((prev) => ({
@@ -38,19 +41,38 @@ export default function TellYourStoryForm({ isOpen, onClose }: TellYourStoryForm
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
 
-    // Simulate form submission - replace with actual submission logic
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch(N8N_STORY_WEBHOOK, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          formType: "story",
+          submittedAt: new Date().toISOString(),
+          ...formData,
+        }),
+      });
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
 
-    // Reset after showing success
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: "", email: "", phone: "", sport: "", story: "" });
-      onClose();
-    }, 2000);
+      setIsSubmitted(true);
+
+      // Reset after showing success
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({ name: "", email: "", phone: "", sport: "", story: "" });
+        onClose();
+      }, 2000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const sports = [
@@ -134,6 +156,18 @@ export default function TellYourStoryForm({ isOpen, onClose }: TellYourStoryForm
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Error Message */}
+                  {error && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 flex items-center gap-3"
+                    >
+                      <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+                      <p className="text-red-400 text-sm">{error}</p>
+                    </motion.div>
+                  )}
+
                   {/* Name */}
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">

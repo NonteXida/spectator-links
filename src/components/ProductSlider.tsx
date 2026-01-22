@@ -2,31 +2,28 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { ShoppingBag, Droplets, Zap } from "lucide-react";
+import Image from "next/image";
 
 const products = [
   {
     id: 1,
     name: "Scuba Hood",
     description: "Premium athletic gear",
-    icon: ShoppingBag,
-    color: "from-[#03fd1c] to-emerald-600",
+    image: "https://static.wixstatic.com/media/d97dfe_770dcef5e15d42e59b31274a24c41ec8~mv2.png",
     url: "https://spectatorsport.com",
   },
   {
     id: 2,
     name: "LOK1N Energy",
     description: "Non-caffeinated focus drink",
-    icon: Droplets,
-    color: "from-cyan-400 to-blue-600",
+    image: "https://static.wixstatic.com/media/d97dfe_445238588b514cecaec9d8c27853e027~mv2.png",
     url: "https://spectatorsport.com",
   },
   {
     id: 3,
     name: "ST4CKT Protein",
     description: "30-serving protein shots",
-    icon: Zap,
-    color: "from-orange-400 to-red-600",
+    image: "https://static.wixstatic.com/media/d97dfe_5e9d46ee9b154cdc951c22c2afedaadb~mv2.png",
     url: "https://spectatorsport.com",
   },
 ];
@@ -64,7 +61,6 @@ export default function ProductSlider() {
         className="flex gap-6 overflow-x-auto pb-4 slider-container snap-x snap-mandatory"
       >
         {products.map((product, index) => {
-          const Icon = product.icon;
           return (
             <motion.a
               key={product.id}
@@ -84,18 +80,19 @@ export default function ProductSlider() {
                 cursor-pointer group
               "
             >
-              {/* Icon with gradient background */}
+              {/* Product Image */}
               <motion.div
-                whileHover={{ rotate: [0, -10, 10, 0] }}
-                transition={{ duration: 0.5 }}
-                className={`
-                  w-20 h-20 rounded-2xl mb-4
-                  bg-gradient-to-br ${product.color}
-                  flex items-center justify-center
-                  shadow-lg
-                `}
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.3 }}
+                className="w-32 h-32 mb-4 relative"
               >
-                <Icon className="w-10 h-10 text-white" />
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="object-contain"
+                  unoptimized
+                />
               </motion.div>
 
               {/* Product name */}
