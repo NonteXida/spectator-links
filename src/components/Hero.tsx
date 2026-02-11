@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative flex flex-col items-center justify-center px-6 pt-24 pb-6">
+    <section className="relative flex flex-col items-center justify-center w-full pt-24 pb-6">
       {/* Logo */}
       <motion.div
         initial={{ scale: 0, opacity: 0 }}

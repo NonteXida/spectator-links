@@ -44,22 +44,23 @@ export default function ProductSlider() {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className="pt-8 pb-12 px-6"
+      className="w-full pt-12 pb-14"
     >
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-2xl font-bold text-center mb-8"
+        className="text-2xl font-bold text-center mb-12"
       >
         <span className="text-white">OUR </span>
         <span className="text-[#03fd1c]">GEAR</span>
       </motion.h2>
 
-      <motion.div
-        style={{ x }}
-        className="flex gap-6 overflow-x-auto pb-4 slider-container snap-x snap-mandatory"
-      >
+      <div className="min-h-[300px] py-4">
+        <motion.div
+          style={{ x }}
+          className="flex gap-6 overflow-x-auto pb-4 px-1 slider-container snap-x snap-mandatory"
+        >
         {products.map((product, index) => {
           return (
             <motion.a
@@ -71,8 +72,9 @@ export default function ProductSlider() {
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15, duration: 0.5 }}
-              whileHover={{ scale: 1.05, y: -8 }}
+              whileHover={{ scale: 1.03, y: -4 }}
               whileTap={{ scale: 0.98 }}
+              style={{ transformOrigin: "center center" }}
               className="
                 flex-shrink-0 w-[280px] snap-center
                 card-neon rounded-2xl p-6
@@ -82,7 +84,7 @@ export default function ProductSlider() {
             >
               {/* Product Image */}
               <motion.div
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
                 className="w-32 h-32 mb-4 relative"
               >
@@ -107,7 +109,7 @@ export default function ProductSlider() {
 
               {/* Shop button */}
               <motion.div
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 className="
                   px-6 py-2 rounded-full
                   bg-[#03fd1c]/10 border border-[#03fd1c]/30
@@ -121,7 +123,8 @@ export default function ProductSlider() {
             </motion.a>
           );
         })}
-      </motion.div>
+        </motion.div>
+      </div>
 
       {/* Scroll hint for mobile */}
       <motion.p

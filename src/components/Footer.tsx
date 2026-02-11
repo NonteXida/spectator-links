@@ -1,6 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
+
+const LOGO_URL = "https://static.wixstatic.com/media/d97dfe_cf24532419624a49802826fc25a80c4f~mv2.png";
 
 export default function Footer() {
   return (
@@ -9,28 +12,24 @@ export default function Footer() {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="px-6 text-center" style={{ paddingTop: '3rem', paddingBottom: '3rem' }}
+      className="w-full text-center pt-12 pb-12"
     >
       <div className="max-w-md mx-auto">
         {/* Divider */}
         <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#03fd1c]/50 to-transparent mx-auto mb-6" />
 
-        {/* Logo small */}
+        {/* Logo */}
         <motion.div
           whileHover={{ scale: 1.1 }}
-          className="w-10 h-10 mx-auto mb-4"
+          className="w-10 h-10 mx-auto mb-4 relative rounded-full overflow-hidden"
         >
-          <svg viewBox="0 0 100 100" className="w-full h-full">
-            <text
-              x="50"
-              y="70"
-              textAnchor="middle"
-              className="fill-[#03fd1c] font-black text-6xl"
-              style={{ fontFamily: "system-ui, sans-serif" }}
-            >
-              S
-            </text>
-          </svg>
+          <Image
+            src={LOGO_URL}
+            alt="Spectator Sport"
+            fill
+            className="object-cover"
+            unoptimized
+          />
         </motion.div>
 
         {/* Copyright */}

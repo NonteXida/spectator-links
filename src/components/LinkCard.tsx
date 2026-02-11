@@ -68,8 +68,8 @@ export default function LinkCard({
   );
 
   const className = `
-    group card-neon rounded-2xl py-5 px-6 flex items-center gap-5
-    cursor-pointer w-full
+    group card-neon rounded-2xl py-5 sm:py-6 px-5 sm:px-6 flex items-center gap-5
+    cursor-pointer w-full min-h-[72px]
     ${featured ? "border-[#03fd1c]/40" : ""}
   `;
 
@@ -90,6 +90,7 @@ export default function LinkCard({
         }}
         whileTap={{ scale: 0.98 }}
         onClick={onClick}
+        style={{ transformOrigin: "center center" }}
         className={className}
       >
         {content}
@@ -115,6 +116,7 @@ export default function LinkCard({
         transition: { duration: 0.2 }
       }}
       whileTap={{ scale: 0.98 }}
+      style={{ transformOrigin: "center center" }}
       className={className}
     >
       {content}

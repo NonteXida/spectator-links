@@ -48,7 +48,7 @@ export default function SocialBar() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.8, duration: 0.5 }}
-      className="px-6 py-6"
+      className="w-full pt-4 pb-8"
     >
       <div className="flex justify-center gap-6 flex-wrap">
         {socials.map((social, index) => {

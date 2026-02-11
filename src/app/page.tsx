@@ -67,35 +67,40 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen bg-black relative">
+    <main className="min-h-screen w-full bg-black relative">
       {/* Particle Background */}
       <ParticleBackground />
 
       {/* Background gradient overlay */}
       <div className="fixed inset-0 bg-gradient-to-b from-black via-transparent to-black pointer-events-none z-[1]" />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-lg mx-auto pb-8 px-4">
-        {/* Hero Section */}
-        <Hero />
+      {/* Content - centered column with consistent padding */}
+      <div className="relative z-10 w-full flex flex-col items-center px-4 sm:px-6 pb-8">
+        <div className="w-full max-w-lg">
+          {/* Hero Section */}
+          <Hero />
 
-        {/* Social Media Bar */}
-        <SocialBar />
+          {/* Social Media Bar */}
+          <SocialBar />
 
-        {/* Main Links Section */}
-        <section className="px-6 pt-6 pb-12" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+          {/* Spacer: guaranteed space between social bar and link cards */}
+          <div className="h-10 shrink-0" aria-hidden />
+
+          {/* Main Links Section - gap for spacing between cards, padding for hover room */}
+          <section className="flex flex-col gap-6 pt-6 pb-12">
           {mainLinks.map((link, index) => (
-            <LinkCard
-              key={link.title}
-              title={link.title}
-              description={link.description}
-              href={link.href}
-              icon={link.icon}
-              index={index}
-              featured={link.featured}
-              isButton={link.isButton}
-              onClick={link.onClick}
-            />
+            <div key={link.title} className="py-2 min-h-0">
+              <LinkCard
+                title={link.title}
+                description={link.description}
+                href={link.href}
+                icon={link.icon}
+                index={index}
+                featured={link.featured}
+                isButton={link.isButton}
+                onClick={link.onClick}
+              />
+            </div>
           ))}
         </section>
 
@@ -107,6 +112,7 @@ export default function Home() {
 
         {/* Footer */}
         <Footer />
+        </div>
       </div>
 
       {/* Forms */}

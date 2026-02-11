@@ -19,20 +19,22 @@ export default function BlanketSection() {
     <motion.section
       ref={sectionRef}
       style={{ opacity, paddingBottom: '4rem' }}
-      className="pt-6 px-6"
+      className="w-full pt-10"
     >
-      <motion.a
-        href="https://highschoolblanket.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="block"
-      >
+      <div className="p-2">
+        <motion.a
+          href="https://www.highschoolblanket.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          style={{ transformOrigin: "center center" }}
+          className="block"
+        >
         <motion.div
           style={{ y }}
           className="relative overflow-hidden rounded-3xl card-neon p-6 md:p-8"
@@ -86,7 +88,8 @@ export default function BlanketSection() {
             </div>
           </div>
         </motion.div>
-      </motion.a>
+        </motion.a>
+      </div>
     </motion.section>
   );
 }
