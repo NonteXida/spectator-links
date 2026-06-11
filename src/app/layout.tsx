@@ -10,18 +10,24 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Spectator Sport | The World is Watching",
-  description: "Utah's Premier Sports Media - Follow us, share your story, and join the movement.",
-  keywords: ["sports", "media", "utah", "athlete", "spectator sport", "photography", "podcast"],
+  description:
+    "Nominate a hard-working athlete for the First In, Last Out Scholarship, grab your free game day photos, join the podcast, and shop team gear.",
+  keywords: ["sports", "media", "utah", "athlete", "scholarship", "spectator sport", "photography", "podcast"],
   openGraph: {
     title: "Spectator Sport | The World is Watching",
-    description: "Utah's Premier Sports Media - Follow us, share your story, and join the movement.",
+    description:
+      "Nominate a hard-working athlete for the First In, Last Out Scholarship, grab your free game day photos, join the podcast, and shop team gear.",
     images: ["https://static.wixstatic.com/media/d97dfe_cf24532419624a49802826fc25a80c4f~mv2.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Spectator Sport | The World is Watching",
-    description: "Utah's Premier Sports Media",
+    description: "Utah's home for high school sports",
   },
+};
+
+export const viewport = {
+  themeColor: "#000000",
 };
 
 export default function RootLayout({

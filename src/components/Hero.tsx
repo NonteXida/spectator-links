@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative flex flex-col items-center justify-center w-full pt-24 pb-6">
+    <section className="relative flex flex-col items-center justify-center w-full pt-16 sm:pt-24 pb-6">
       {/* Logo */}
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
@@ -35,8 +35,8 @@ export default function Hero() {
           <Image
             src="https://static.wixstatic.com/media/d97dfe_cf24532419624a49802826fc25a80c4f~mv2.png"
             alt="Spectator Sport Logo"
-            width={140}
-            height={140}
+            width={120}
+            height={120}
             className="rounded-full"
             priority
           />

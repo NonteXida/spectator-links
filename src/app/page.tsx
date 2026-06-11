@@ -1,31 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
 import SocialBar from "@/components/SocialBar";
+import FeaturedCard from "@/components/FeaturedCard";
 import LinkCard from "@/components/LinkCard";
-import ProductSlider from "@/components/ProductSlider";
 import BlanketSection from "@/components/BlanketSection";
-import TellYourStoryForm from "@/components/TellYourStoryForm";
 import PodcastForm from "@/components/PodcastForm";
 import Footer from "@/components/Footer";
 import {
   Mic,
-  Trophy,
   Camera,
   Globe,
   ShoppingBag,
+  HeartHandshake,
+  Medal,
 } from "lucide-react";
 
-// Dynamically import particles to avoid SSR issues
-const ParticleBackground = dynamic(
-  () => import("@/components/ParticleBackground"),
-  { ssr: false }
-);
-
 export default function Home() {
-  const [isStoryFormOpen, setIsStoryFormOpen] = useState(false);
   const [isPodcastFormOpen, setIsPodcastFormOpen] = useState(false);
 
   const mainLinks = [
@@ -34,28 +26,31 @@ export default function Home() {
       description: "Share your story with Cosette Abeyta",
       href: "#",
       icon: Mic,
-      featured: true,
       isButton: true,
       onClick: () => setIsPodcastFormOpen(true),
     },
     {
-      title: "Tell Your Story",
-      description: "Athlete nomination - get featured",
-      href: "#",
-      icon: Trophy,
-      isButton: true,
-      onClick: () => setIsStoryFormOpen(true),
-    },
-    {
-      title: "Free Photos",
-      description: "Download your game day photos",
+      title: "Free Game Day Photos",
+      description: "Download your shots, no charge",
       href: "https://spectatorsportofficial.smugmug.com/",
       icon: Camera,
     },
     {
-      title: "Our Gear",
-      description: "Drinks, powders & apparel",
-      href: "https://spectatorsport.com",
+      title: "Run a Team Fundraiser",
+      description: "Your program keeps the profit",
+      href: "https://spectatorsport.com/coaches",
+      icon: HeartHandshake,
+    },
+    {
+      title: "The Foundation",
+      description: "Scholarships and athlete features",
+      href: "https://spectatorsport.foundation",
+      icon: Medal,
+    },
+    {
+      title: "Shop Gear",
+      description: "Blankets, apparel and more",
+      href: "https://spectatorsport.com/shop",
       icon: ShoppingBag,
     },
     {
@@ -68,58 +63,43 @@ export default function Home() {
 
   return (
     <main className="min-h-screen w-full bg-black relative">
-      {/* Particle Background */}
-      <ParticleBackground />
+      {/* CSS-only ambience: aurora drift + faint court grid (no particle JS) */}
+      <div className="aurora" />
+      <div className="grid-lines" />
 
-      {/* Background gradient overlay */}
-      <div className="fixed inset-0 bg-gradient-to-b from-black via-transparent to-black pointer-events-none z-[1]" />
-
-      {/* Content - centered column with consistent padding */}
       <div className="relative z-10 w-full flex flex-col items-center px-4 sm:px-6 pb-8">
-        <div className="w-full max-w-lg">
-          {/* Hero Section */}
+        <div className="w-full max-w-md sm:max-w-lg">
           <Hero />
 
-          {/* Social Media Bar */}
           <SocialBar />
 
-          {/* Spacer: guaranteed space between social bar and link cards */}
-          <div className="h-10 shrink-0" aria-hidden />
+          {/* Featured: scholarship nomination */}
+          <div className="pt-10">
+            <FeaturedCard />
+          </div>
 
-          {/* Main Links Section - gap for spacing between cards, padding for hover room */}
-          <section className="flex flex-col gap-6 pt-6 pb-12">
-          {mainLinks.map((link, index) => (
-            <div key={link.title} className="py-2 min-h-0">
+          {/* Main links */}
+          <section className="flex flex-col gap-4 pt-8 pb-10">
+            {mainLinks.map((link, index) => (
               <LinkCard
+                key={link.title}
                 title={link.title}
                 description={link.description}
                 href={link.href}
                 icon={link.icon}
                 index={index}
-                featured={link.featured}
                 isButton={link.isButton}
                 onClick={link.onClick}
               />
-            </div>
-          ))}
-        </section>
+            ))}
+          </section>
 
-        {/* Product Slider */}
-        <ProductSlider />
+          <BlanketSection />
 
-        {/* Blanket Section */}
-        <BlanketSection />
-
-        {/* Footer */}
-        <Footer />
+          <Footer />
         </div>
       </div>
 
-      {/* Forms */}
-      <TellYourStoryForm
-        isOpen={isStoryFormOpen}
-        onClose={() => setIsStoryFormOpen(false)}
-      />
       <PodcastForm
         isOpen={isPodcastFormOpen}
         onClose={() => setIsPodcastFormOpen(false)}
