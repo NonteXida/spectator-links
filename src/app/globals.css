@@ -35,6 +35,8 @@ body {
   color: var(--foreground);
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
+  /* keep the address bar collapse smooth on mobile */
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Custom scrollbar */
@@ -55,55 +57,152 @@ body {
   background: var(--dark-green);
 }
 
-/* Neon glow utilities */
-.neon-glow {
-  box-shadow: 0 0 10px var(--neon-green),
-              0 0 20px var(--neon-green),
-              0 0 40px rgba(3, 253, 28, 0.3);
+/* ── Aurora background: pure CSS, GPU-cheap, replaces tsparticles ───────── */
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
+.aurora::before,
+.aurora::after {
+  content: "";
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.16;
+  will-change: transform;
+}
+
+.aurora::before {
+  background: radial-gradient(circle at center, var(--neon-green) 0%, transparent 60%);
+  top: -25vmax;
+  left: -20vmax;
+  animation: aurora-a 18s ease-in-out infinite alternate;
+}
+
+.aurora::after {
+  background: radial-gradient(circle at center, #00b3ff 0%, transparent 60%);
+  bottom: -30vmax;
+  right: -25vmax;
+  opacity: 0.08;
+  animation: aurora-b 22s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(12vmax, 10vmax, 0) scale(1.25); }
+}
+
+@keyframes aurora-b {
+  from { transform: translate3d(0, 0, 0) scale(1.15); }
+  to   { transform: translate3d(-10vmax, -12vmax, 0) scale(0.95); }
+}
+
+/* faint court-line grid behind everything */
+.grid-lines {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(3, 253, 28, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(3, 253, 28, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 80%);
+}
+
+/* Neon glow utilities */
 .neon-glow-text {
   text-shadow: 0 0 10px var(--neon-green),
                0 0 20px var(--neon-green),
                0 0 40px rgba(3, 253, 28, 0.5);
 }
 
-.neon-glow-subtle {
-  box-shadow: 0 0 5px var(--neon-green),
-              0 0 10px rgba(3, 253, 28, 0.3);
-}
-
-/* Gradient backgrounds */
-.gradient-radial {
-  background: radial-gradient(ellipse at center, var(--dark-grey) 0%, var(--background) 70%);
-}
-
-.gradient-dark {
-  background: linear-gradient(180deg, #0a0a0a 0%, #000000 50%, #050505 100%);
-}
-
 /* Card styles */
 .card-neon {
   background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
   border: 1px solid rgba(3, 253, 28, 0.2);
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card-neon:hover {
+.card-neon:hover,
+.card-neon:active {
   border-color: rgba(3, 253, 28, 0.6);
   box-shadow: 0 0 20px rgba(3, 253, 28, 0.2),
               inset 0 0 20px rgba(3, 253, 28, 0.05);
 }
 
-/* Particle container */
-#tsparticles {
-  position: fixed;
+/* ── Featured card: rotating conic border + shine sweep ─────────────────── */
+.featured-ring {
+  position: relative;
+  border-radius: 1.25rem;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--ring-angle, 0deg),
+    rgba(3, 253, 28, 0.05) 0deg,
+    var(--neon-green) 90deg,
+    rgba(3, 253, 28, 0.05) 180deg,
+    rgba(3, 253, 28, 0.4) 270deg,
+    rgba(3, 253, 28, 0.05) 360deg
+  );
+  animation: ring-spin 5s linear infinite;
+}
+
+@property --ring-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes ring-spin {
+  to { --ring-angle: 360deg; }
+}
+
+/* fallback for browsers without @property: a steady glow instead of a dead border */
+@supports not (background: conic-gradient(from var(--ring-angle, 0deg), red, blue)) {
+  .featured-ring {
+    background: rgba(3, 253, 28, 0.45);
+    box-shadow: 0 0 24px rgba(3, 253, 28, 0.25);
+    animation: none;
+  }
+}
+
+.featured-inner {
+  position: relative;
+  border-radius: calc(1.25rem - 2px);
+  background: linear-gradient(160deg, #101810 0%, #000000 60%);
+  overflow: hidden;
+}
+
+.featured-inner::after {
+  content: "";
+  position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+  bottom: 0;
+  left: -75%;
+  width: 50%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(3, 253, 28, 0.12) 45%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(3, 253, 28, 0.12) 55%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: shine-sweep 4.5s ease-in-out infinite;
   pointer-events: none;
+}
+
+@keyframes shine-sweep {
+  0%, 60% { left: -75%; }
+  100% { left: 125%; }
 }
 
 /* Form styles */
@@ -138,38 +237,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Animation keyframes */
-@keyframes pulse-neon {
-  0%, 100% {
-    opacity: 1;
-    box-shadow: 0 0 10px var(--neon-green),
-                0 0 20px var(--neon-green);
-  }
-  50% {
-    opacity: 0.8;
-    box-shadow: 0 0 20px var(--neon-green),
-                0 0 40px var(--neon-green),
-                0 0 60px rgba(3, 253, 28, 0.3);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.animate-pulse-neon {
-  animation: pulse-neon 2s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
 /* Slider styles */
 .slider-container {
   scrollbar-width: none;
@@ -178,4 +245,14 @@ body {
 
 .slider-container::-webkit-scrollbar {
   display: none;
+}
+
+/* Respect users who turn animations off */
+@media (prefers-reduced-motion: reduce) {
+  .aurora::before,
+  .aurora::after,
+  .featured-ring,
+  .featured-inner::after {
+    animation: none;
+  }
 }
