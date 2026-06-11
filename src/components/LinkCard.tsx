@@ -43,7 +43,7 @@ export default function LinkCard({
         <h3 className="font-bold text-base sm:text-lg text-white group-hover:text-[#03fd1c] transition-colors leading-snug">
           {title}
         </h3>
-        <p className="text-gray-400 text-sm truncate">{description}</p>
+        <p className="text-gray-400 text-sm line-clamp-2">{description}</p>
       </div>
       <ChevronRight className="w-5 h-5 shrink-0 text-[#03fd1c]/50 group-hover:text-[#03fd1c] group-hover:translate-x-1 transition-all" />
     </>
